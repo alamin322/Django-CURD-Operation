@@ -1,0 +1,64 @@
+{% extends 'app1/base.html' %} {% block content %}
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-8">
+      <h2 class="text-center alert alert-danger">CRUD Project</h2>
+      <form method="post" class="mb-5">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="username" class="form-label">UserName</label>
+          <input type="text" class="form-control" id="username" name="username" aria-describedby="user" />
+        </div>
+
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" />
+          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone</label>
+          <input type="text" class="form-control" id="phone" name="phone" aria-describedby="phone" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="offset-1">
+      <h4 class="text-center alert alert-info">Show Information</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">UserName</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in information %}
+          <tr>
+            <th scope="row">{{i.id}}</th>
+            <td>{{i.name}}</td>
+            <td>{{i.email}}</td>
+            <td>{{i.phone}}</td>
+            <td>
+              <a href="{% url 'update_data' i.id %}" class="btn btn-primary btn-sm">Update</a>
+
+              <form action="{% url 'delete_data' i.id %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endblock content %}
+  </div>
+</div>
